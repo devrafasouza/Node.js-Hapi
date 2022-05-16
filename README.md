@@ -11,6 +11,19 @@
 - [x] Declarar rotas
 
 
+### Authentication with basic and bcrypt
+
+
+- [x] Instalar as dependências `npm i --save @hapi/basic`
+- [x] Instalar as dependências `npm i --save bcrypt`
+- [x] Definir a validação
+- [x] Definir a estrategia
+
+
+
+
+
+
 
 
 
