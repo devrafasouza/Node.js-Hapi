@@ -21,6 +21,16 @@
 
 
 
+### Authentication with cookie and bcrypt
+
+
+- [x] Instalar as dependências `npm i --save @hapi/cookie`
+- [x] Instalar as dependências `npm i --save bcrypt`
+- [x] Definir a validação
+- [x] Definir a estrategia
+
+
+
 
 
 
