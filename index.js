@@ -1,44 +1,53 @@
 'use strict';
 
-
-//Importando a biblioteca
+const Bcrypt = require('bcrypt');
 const Hapi = require('@hapi/hapi');
 
-
-//Criando o servidor do objeto hapi
-
-const init = async () => {
-  const server = new Hapi.Server({
-    port: 3000,
-    host: 'localhost'
-  });
-
-  //Criando rotas
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (request, h) {
-      return 'Hello Word!';
+const users = {
+    john: {
+        username: 'john',
+        password: '$2a$10$iqJSHD.BGr0E2IxQwYgJmeP3NvhPrXAeLSaGCj6IR/XU5QtjVu5Tm',   // 'secret'
+        name: 'John Doe',
+        id: '2133d32a'
     }
-  });
-  
+};
 
-  await server.start();
-  console.log('Server running on %s', server.info.uri);
-}
+const validate = async (request, username, password) => {
 
-process.on('unhadledRejection', (err) => {
-  console.log(err);
-  process.exit(1);
+    const user = users[username];
+    if (!user) {
+        return { credentials: null, isValid: false };
+    }
 
-})
+    const isValid = await Bcrypt.compare(password, user.password);
+    const credentials = { id: user.id, name: user.name };
 
-init();
+    return { isValid, credentials };
+};
 
+const start = async () => {
 
+    const server = Hapi.server({ port: 4000 });
 
+    await server.register(require('@hapi/basic'));
 
+    server.auth.strategy('simple', 'basic', { validate });
 
+    server.route({
+        method: 'GET',
+        path: '/',
+        options: {
+            auth: 'simple'
+        },
+        handler: function (request, h) {
 
+            return 'welcome';
+        }
+    });
 
+    await server.start();
 
+    console.log('server running at: ' + server.info.uri);
+};
+
+start();
