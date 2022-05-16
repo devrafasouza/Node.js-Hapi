@@ -16,6 +16,7 @@ server.start((err) => {
     console.log(`Server running at: ${server.info.uri}`);
 });
 
+
 //Criando rotas
 
 server.route({
@@ -35,3 +36,23 @@ server.route({
   }
 
 });
+
+//Plugin inert para pagina estaticas
+server.register(require('inert'), (err) => {
+
+  if (err) {
+    throw err;
+  }
+
+
+  server.route({
+    method: 'GET',
+    path: '/hello',
+    handler: function (request, reply) {
+      reply.file('./public/hello.html');
+    }
+  });
+});
+
+
+

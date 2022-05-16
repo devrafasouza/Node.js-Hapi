@@ -9,7 +9,8 @@
 - [x] Instalar as dependências `npm i --save hapi@16`
 - [x] Criar um servidor
 - [x] Declarar rotas
-- [x] Paginas estaticas
+- [x] Instalar as dependências `npm i --save inert@4`
+- [x] Paginas estaticas com plugin inert
 
 
 
